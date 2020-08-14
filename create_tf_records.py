@@ -3,7 +3,7 @@ Usage
 	python create_tf_records.py \
       --image_dir="${IMAGE_DIR}" \
       --annotations_csv="${ANNOTATIONS_CSV}" \
-      --output_dir="${OUTPUT_DIR}"
+      --output_file="${OUTPUT_FILE}"
 """	
 
 import tensorflow as tf
@@ -19,7 +19,7 @@ from absl import flags
 
 flags.DEFINE_string('image_dir', '', 'Image directory.')
 flags.DEFINE_string('annotations_csv', '', 'Annotations in .csv format.')
-flags.DEFINE_string('output_dir', '/tmp/', 'Output data directory.')
+flags.DEFINE_string('output_file', '/tmp/', 'Output data directory.')
 
 FLAGS = flags.FLAGS
 
@@ -67,8 +67,8 @@ def create_tf_example(image_dir, image_file_name, annotations_image_df):
     tf_example = tf.train.Example(features=tf.train.Features(feature_dict))
     return tf_example
 
-def create_tf_records(image_dir, annotations_csv, output_dir):
-    with tf.io.TFRecordWriter(output_dir) as writer:
+def create_tf_records(image_dir, annotations_csv, output_file):
+    with tf.io.TFRecordWriter(output_file) as writer:
         all_image_files = list(os.listdir(image_dir))
         annotations_df = pd.read_csv(annotations_csv)
         missing_annotations = []
@@ -86,13 +86,13 @@ def create_tf_records(image_dir, annotations_csv, output_dir):
         print('Annotations are missing for the following images')
         print(missing_annotations)
     
-    print('Successfully created the TFRecords: {}'.format(output_dir))
+    print('Successfully created the TFRecords: {}'.format(output_file))
 
 def main(_):
     image_dir = os.path.join(FLAGS.image_dir)
     annotations_csv = os.path.join(FLAGS.annotations_csv)
-    output_dir = os.path.join(FLAGS.output_dir)
-    create_tf_records(image_dir, annotations_csv, output_dir)
+    output_file = os.path.join(FLAGS.output_file)
+    create_tf_records(image_dir, annotations_csv, output_file)
 
 if __name__ == '__main__':
     app.run(main)
