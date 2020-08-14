@@ -11,6 +11,7 @@ from PIL import Image
 import pandas as pd
 from pathlib import Path
 import os 
+import io
 from tqdm import tqdm
 from object_detection.utils import dataset_util
 from absl import app
@@ -27,7 +28,7 @@ def create_tf_example(image_dir, image_file_name, annotations_image_df):
     #Load the image
     full_path = os.path.join(image_dir, image_file_name)
     image_format = Path(full_path).suffix
-    with tf.gfile.GFile(full_path, 'rb') as fid:
+    with tf.io.gfile.GFile(full_path, 'rb') as fid:
         encoded_jpg = fid.read()
     encoded_jpg_io = io.BytesIO(encoded_jpg)
     image = Image.open(encoded_jpg_io)
