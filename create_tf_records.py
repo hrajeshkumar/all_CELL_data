@@ -13,12 +13,13 @@ from pathlib import Path
 import os 
 from tqdm import tqdm
 from object_detection.utils import dataset_util
+from absl import app
+from absl import flags
 
-flags = tf.app.flags
 
-tf.flags.DEFINE_string('image_dir', '', 'Image directory.')
-tf.flags.DEFINE_string('annotations_csv', '', 'Annotations in .csv format.')
-tf.flags.DEFINE_string('output_dir', '/tmp/', 'Output data directory.')
+flags.DEFINE_string('image_dir', '', 'Image directory.')
+flags.DEFINE_string('annotations_csv', '', 'Annotations in .csv format.')
+flags.DEFINE_string('output_dir', '/tmp/', 'Output data directory.')
 
 FLAGS = flags.FLAGS
 
@@ -94,4 +95,4 @@ def main(_):
     create_tf_records(image_dir, annotations_csv, output_dir)
 
 if __name__ == '__main__':
-    tf.app.run()
+    app.run()
