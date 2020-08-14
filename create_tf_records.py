@@ -65,7 +65,7 @@ def create_tf_example(image_dir, image_file_name, annotations_image_df):
     }
 
     #Create the tf example
-    tf_example = tf.train.Example(features=tf.train.Features(feature_dict))
+    tf_example = tf.train.Example(features=tf.train.Features(feature=feature_dict))
     return tf_example
 
 def create_tf_records(image_dir, annotations_csv, output_file):
