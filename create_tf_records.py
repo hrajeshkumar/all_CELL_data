@@ -68,7 +68,7 @@ def create_tf_example(image_dir, image_file_name, annotations_image_df):
     return tf_example
 
 def create_tf_records(image_dir, annotations_csv, output_dir):
-    with tf.python_io.TFRecordWriter(output_dir) as writer:
+    with tf.io.TFRecordWriter(output_dir) as writer:
         all_image_files = list(os.listdir(image_dir))
         annotations_df = pd.read_csv(annotations_csv)
         missing_annotations = []
