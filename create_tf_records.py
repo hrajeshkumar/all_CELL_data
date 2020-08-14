@@ -95,4 +95,4 @@ def main(_):
     create_tf_records(image_dir, annotations_csv, output_dir)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(main)
