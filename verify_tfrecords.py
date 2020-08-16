@@ -5,9 +5,7 @@ that the file does not end in the middle of a record. It does not verify the
 CRCs.
 """
 import struct
-import tensorflow as tf
-
-from tensorflow import app
+import tensorflow.compat.v1 as tf
 from tensorflow import flags
 from tensorflow import gfile
 from tensorflow import logging
@@ -47,4 +45,4 @@ def main(unused_argv):
 
 
 if __name__ == "__main__":
-  app.run()
+  tf.app.run()
