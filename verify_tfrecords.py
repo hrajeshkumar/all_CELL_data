@@ -5,12 +5,12 @@ that the file does not end in the middle of a record. It does not verify the
 CRCs.
 """
 import struct
-import tensorflow.compat.v1 as tf
-from tensorflow import flags
+import tensorflow as tf
+from absl import app
+from absl import flags
 from tensorflow import gfile
 from tensorflow import logging
 
-flags = tf.app.flags
 FLAGS = flags.FLAGS
 flags.DEFINE_string("input_data_pattern", "",
                     "File glob defining for the TFRecords files.")
@@ -18,10 +18,10 @@ flags.DEFINE_string("input_data_pattern", "",
 
 def main(unused_argv):
   logging.set_verbosity(tf.logging.INFO)
-  paths = gfile.Glob(FLAGS.input_data_pattern)
+  paths = tf.io.gfile.Glob(FLAGS.input_data_pattern)
   logging.info("Found %s files.", len(paths))
   for path in paths:
-    with gfile.Open(path, "r") as f:
+    with tf.io.gfile.Open(path, "r") as f:
       first_read = True
       while True:
         length_raw = f.read(8)
@@ -45,4 +45,4 @@ def main(unused_argv):
 
 
 if __name__ == "__main__":
-  tf.app.run()
+  app.run()
